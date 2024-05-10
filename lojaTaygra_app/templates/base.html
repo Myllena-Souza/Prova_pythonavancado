@@ -12,36 +12,112 @@
     </head>
         <style>
 
-                    .container-produto {
-                        height : 100%;
-                        width: 100%;
-                        padding: 70px;
-                    
-                    }
-                    .card {
-                        flex-wrap: wrap;
-                        display: inline-block
-                    }
+          .container-produto {
+          height : 100%;
+          width: 100%;
+          padding: 70px;          
+          }
+          .card {
+          flex-wrap: wrap;
+          display: inline-block
+          }
+
+          .bnt {
+            text-align : center;
+          }
+        
 
         </style>
     <body>
 
-        <div class="topo">
+      <div class="topo">
     
             <div id="fundo">
               {% load static %}
-                <img src="{% static 'artetopofundo.jpg' %}" alt="logo" class="img-responsive w-100  object-fit-cover" height="290">
+                <img src="{% static 'artetopofundo.jpg' %}" alt="logo" class="img-responsive w-100  object-fit-cover" height="200">
             </div>
         </div>
 
-        <div id="logo">
-            {% load static %}
-            <img src="{% static 'logo.jpg' %}" alt="logo" class="img-responsive w-100 object-fit-cover img-container" height="400px" >
+        <!--MODAIS-->
+        <div id = 'login' class="modal top-0 vh-100 row " tabindex="-1">
+          <div class="modal-dialog top-50 start-50 translate-middle m-0">
+            <div class="modal-content container-fluid">
+              <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form method = "post" action = "{% url 'login' %}">
+    
+                {% csrf_token %}
+                {{forms.username}}
+                {{forms.password}}
+    
+                <div class="modal-footer">
+                  <button type = 'submit' class="btn btn-outline-success d-flex justify-content-end">Entrar</button>
+    
+                  Crie seu cadastro
+                  <p>
+                    <button type = 'button' data-bs-toggle="modal" data-bs-target="#modal-novo-usuario" class="btn btn-outline-success d-flex justify-content-end">Cadastre-se</button>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>      
         </div>
+    
+        <div class="gap-2 justify-content-md-end" >
+    
+          {% if user.is_authenticated %}
+    
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Bem vindo, {{user.username}}
+            </button>
+            <ul class="dropdown-menu">
+      
+              <li><a class="dropdown-item btn btn-secondary rgba(2, 175, 175, 0.952)" href="{% url 'logout' %} ">Sair</a></li>
+            </ul>
+          </div>
+            {% else %}
+            <button class="btn me-md-2 " type="button" id="botao" data-bs-toggle="modal" data-bs-target="#login">Entre ou Cadastre-se</button>
+            {% endif %}
+        </div>
+      
+        <div id = 'modal-novo-usuario' class="modal top-0 vh-100 row container-fluid" tabindex="-1">
+          <div class="modal-dialog top-50 start-50 translate-middle m-0">
+            <div class="modal-content p-2">
+              <div class="modal-header">
+                <h5 class="modal-title">Novo Usuário</h5>
+              </div>
+              <form method = "post" action = "{% url 'cadastrouser' %}">
+    
+                {% csrf_token %}
+                <div class = "row gap-2 ">
+                  <div class = "col">{{formcadastro.first_name}}</div>
+                  <div class = "col">{{formcadastro.last_name}}</div>
+                </div>
+                {{formcadastro.username}}
+                {{formcadastro.email}}
+                {{formcadastro.password}}
+                <input type = "password" name ="confirmacao" class ="content my-2 p-2"></input>
+                  <div class="modal-footer">
+                    <button type = 'submit' class="btn btn-outline-success">Casdastrar</button>
+                    <button type = 'button' data-bs-dismiss="modal" class="btn btn-outline-success">Cancelar</button>
+                  </div>
+                </form>
+            </div>
+          </div>      
+        </div>
+
+        <div id="logo">
+          {% load static %}
+          <img src="{% static 'taygra123.png' %}" alt="logo" class="img-responsive w-100 object-fit-cover img-container" height="400px" >
+        </div>
+      
 
         <nav class="navbar navbar-expand-lg bg-body-tertiary" >
             <div class="container-fluid">
-              <a class="navbar-brand" href="{% url 'home' %}">HOME</a>
+              <a class="navbar-brand" href="{% url 'home' %}">TAYGRA</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -49,41 +125,55 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Fale Conosco</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'contato' %}">Contato</a>
                   </li>
                   
                     <li class="nav-item">
-                      <a class="nav-link active" href="#">Promoções</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link active" href="#">Novidades</a>
+                      <a class="nav-link active" href="{% url 'promocao'%}">Promoções</a>
                     </li>
                   
                   <li class="nav-item">
-                    <a class="nav-link active" href="#">Regras de Funcionamento</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">Sobre</a>
+                    <a class="nav-link active" href="{% url 'sobre' %}">Sobre</a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Produto
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Adicionar Produto</a></li>
-                      <li><a class="dropdown-item" href="#">Adicionar Marca</a></li>
-                      <li><a class="dropdown-item" href="#">Adicionar Categoria</a></li>
+                      <li><a class="dropdown-item" href="{% url 'add_produtos' %}">Adicionar Produto</a></li>
                     </ul>
                   </li>
                   
                 </ul>
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Pesquisar</button>
-                </form>
               </div>
             </div>
         </nav>
+        <main>
+    {% block conteudo %}
+          
+      {% for prod in produtos %}
+
+          {% load static %}
+    
+        <div class="card text-bg-light mb-3" style="width: 18rem;">
+        <div class="card-body">
+          {% for img in prod.imagem_set.all %}
+            <img src="{% static img.nome %}" class="card-img-top" alt="...">
+          {% endfor %}
+          <h5 class="card-title"> {{prod.nome}} </h5>
+          <p class="card-descricao"> {{prod.descricao|slice:":50"}}</p>
+          <h6 class="card-codigo"> {{prod.codigo}} </h6>
+          <a href="" class="btn btn-primary">Por R${{prod.preco}}</a>
+        </div>
+        </div>
+
+        {% empty %}
+
+        <div> Ainda não há produtos cadastrados. </div>
+
+      {% endfor %}
+    {% endblock %}
+    </main>
 
         <footer>
     
@@ -91,7 +181,7 @@
               {% load static %}
         
               <img src="{% static 'artetopofundo.jpg' %}" alt="logo" class="img-responsive imagem object-fit-cover" >
-              <h4 id="footerC"> Copyright &copy; 2024 </h4>
+              <h4 class ="footerC"> Copyright &copy; 2024 </h4>
             </div>
 
         </footer>

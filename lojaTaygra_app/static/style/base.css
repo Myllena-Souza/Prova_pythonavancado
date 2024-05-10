@@ -1,14 +1,21 @@
 #logo{
     position: absolute;
-	right: 50%;
-	top: 30px;
-    max-width: 100%;
-    transform: translate(50%, 0);
-    width: 500px;
-    max-height: 100%;
+	top: 2px;
+    width: auto;
+    max-height: 50%;
     overflow: visible;
-    }
-   
+    right: 20%;
+}
+
+.topo {
+   /* Adicionei um estilo para alinhar à esquerda */
+   text-align: left;
+}
+
+#fundo img {
+    opacity: 0.5;
+}
+
 .d-grid{
     display: flex;
     justify-content: center; 
@@ -16,18 +23,15 @@
 }
 
 #botao{
-    background-color: rgba(2, 175, 175, 0.952);
+    background-color: rgba(77, 250, 115, 0.952);
     position: absolute;
     max-width: 100%;
-	left: 70%;
-    right: 80%;
-	top: 80px;
-    transform: translate(50%, 0);
+    top: 80px;
     z-index: 500; /*isso define que o botão vai ta por cima da logo e do fundo*/
 }
 
 .btn-outline-success{
-    background-color: rgba(10, 150, 150, 0.651);
+    background-color: rgba(77, 250, 115, 0.952);
 }
 
 
@@ -37,16 +41,18 @@
     left: 40%;
 }
 
-#footerC{
+.footerC{
     text-align: center;
     position: relative;
-    color: white;
+    color: rgb(0, 0, 0);
+    
 }
 
 #footer{
     
     background-repeat: no-repeat;
     background-size: cover;
+    opacity: 0.5;
     
 }
 .mb-3 {
